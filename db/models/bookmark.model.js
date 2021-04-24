@@ -12,7 +12,7 @@ Bookmark.init( {
         field: "id"
     },
     type: {
-        type: DataTypes.ENUM,
+        type: DataTypes.SMALLINT,
         allowNull: false
     },
     bookmark_note: {
