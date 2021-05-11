@@ -13,8 +13,8 @@ authRouter.post('/signup', async (req, res) => {
         else throw new Error();
     }
     catch (e) {
-        res.send({ error: e });
         res.status(403);
+        res.send({ error: e });
     }
 });
 authRouter.post('/signin', async (req, res) => {

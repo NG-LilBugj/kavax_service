@@ -14,6 +14,7 @@ module.exports = {
             return { success: true, token: jwt.sign(payload, process.env.TOKEN_SECRET, {expiresIn: 900}) }
         }
         catch (e) {
+            console.error(e)
             return { success: false, error: e }
         }
     },

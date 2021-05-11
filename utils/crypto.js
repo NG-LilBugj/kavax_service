@@ -8,6 +8,7 @@ module.exports = {
         return {
             email: userInfo.email,
             first_name: userInfo.username,
+            second_name: userInfo.username,
             password: hash
         }
     },
