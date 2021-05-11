@@ -27,6 +27,10 @@ module.exports = {
         return { success: verifyHash(authData, user.getDataValue('password')), token: jwt.sign(payload, process.env.TOKEN_SECRET, {expiresIn: 900}) }
     },
 
+    systemUsers: async () => {
+        return await User.findAll();
+    },
+
     deleteUser: async () => {
 
     }

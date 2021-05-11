@@ -5,8 +5,9 @@ require('dotenv').config();
 
 const { authRouter } = require("./routers/authRouter");
 const { serviceRouter } = require("./routers/serviceRouter");
-const { paymentRouter } = require("./routers/paymentRouter")
-const { connect } = require('./db/dbAccess')
+const { paymentRouter } = require("./routers/paymentRouter");
+const userHandlers = require("./handlers/user.handlers");
+const { connect } = require('./db/dbAccess');
 
 const app = express();
 
@@ -14,8 +15,9 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/', async (req, res) => {
+    const users = await userHandlers.systemUsers();
     res.status(200);
-    res.send('<h1>HELLO, KOTUX!</h1>');
+    res.send({ users });
 });
 
 app.use('/auth', authRouter);
