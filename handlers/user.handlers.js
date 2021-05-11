@@ -20,7 +20,7 @@ module.exports = {
     },
 
     logInUser: async (authData) => {
-        const user = await User.findOne({ where: { email: authData.email } })
+        const user = await User.findOne({ where: { first_name: authData.username } })
         const payload = {
             userId: user.getDataValue('id'),
             maxAge: moment().add(15, 'minutes')
