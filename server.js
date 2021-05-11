@@ -18,7 +18,7 @@ app.get('/', async (req, res) => {
     try {
         const users = await userHandlers.systemUsers();
         res.status(200);
-        res.send({users});
+        res.send({ users });
     }
     catch (e) {
         res.send({ error: e })

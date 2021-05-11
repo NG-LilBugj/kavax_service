@@ -6,7 +6,8 @@ module.exports = {
         const salt = bcrypt.genSaltSync(process.env.SALT_ROUNDS);
         const hash = bcrypt.hashSync(userInfo.password, salt);
         return {
-            ...userInfo,
+            email: userInfo.email,
+            first_name: userInfo.username,
             password: hash
         }
     },
