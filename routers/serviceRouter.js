@@ -22,7 +22,7 @@ const upload = multer({ storageConfig: storageConfig }).single('device_pic');
 serviceRouter.use(tokenVerify);
 serviceRouter.get('/device', async (req, res) => {
     try {
-        const result = await serviceHandlers.getDevice(req.body.data.id);
+        const result = await serviceHandlers.getDevice(req.body.id);
         if (result.success) {
             res.status(200);
             res.send({ device: result.device });
