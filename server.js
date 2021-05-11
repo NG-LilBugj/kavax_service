@@ -15,9 +15,14 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/', async (req, res) => {
-    const users = await userHandlers.systemUsers();
-    res.status(200);
-    res.send({ users });
+    try {
+        const users = await userHandlers.systemUsers();
+        res.status(200);
+        res.send({users});
+    }
+    catch (e) {
+        res.send({ error: e })
+    }
 });
 
 app.use('/auth', authRouter);
