@@ -5,8 +5,7 @@ const authRouter = express.Router();
 
 authRouter.post('/signup', async (req, res) => {
     try {
-        console.log(req.body);
-        const result = await userHandlers.signUpUser(req.body.userData);
+        const result = await userHandlers.signUpUser(req.body);
         if (result.success) {
             res.status(200);
             res.send({ message: "Success sign up", accessToken: result.token });
@@ -20,7 +19,7 @@ authRouter.post('/signup', async (req, res) => {
 });
 authRouter.post('/signin', async (req, res) => {
     try {
-        const result = await userHandlers.logInUser(req.body.userData);
+        const result = await userHandlers.logInUser(req.body);
         if (result.success) {
             res.status(200);
             res.send({message: "Success login", accessToken: result.token});
