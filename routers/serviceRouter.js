@@ -4,6 +4,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
 const serviceHandlers = require("../handlers/service.handlers");
+const { tokenVerify } = require("../utils/middlewares");
 
 const timestamp = moment.now().toString();
 
@@ -18,16 +19,19 @@ const storageConfig = multer.diskStorage({
 });
 const upload = multer({ storageConfig: storageConfig }).single('device_pic');
 
+serviceRouter.use(tokenVerify);
 serviceRouter.get('/deviceData', async (req, res) => {
     try {
         const result = await serviceHandlers.getDevice(req.body.data.id);
         if (result.success) {
+            res.status(200);
             res.send({ device: result.device });
         }
         else throw new Error();
     }
     catch (e) {
-        res.sendStatus(504)
+        res.status(504);
+        res.send({ error: e })
     }
 });
 serviceRouter.get('/deviceImg', async (req, res) => {
@@ -40,7 +44,8 @@ serviceRouter.get('/deviceImg', async (req, res) => {
         else throw new Error();
     }
     catch (e) {
-        res.sendStatus((504))
+        res.status(504);
+        res.send({ error: e })
     }
 });
 serviceRouter.post('/deliver', upload, async (req, res) => {
@@ -54,21 +59,30 @@ serviceRouter.post('/deliver', upload, async (req, res) => {
             image: bufferData
         });
         if (result.success) {
-            res.sendStatus(200);
+            res.status(200);
             res.send({ message: "Device delivered" });
         }
-        else throw new Error();
+        else throw result.error;
     }
     catch (e) {
-        res.sendStatus(504);
+        res.status(504);
+        res.send({ error: e });
     }
 });
-serviceRouter.delete('/deliver', async (req, res) => {
+serviceRouter.delete('/ship', async (req, res) => {
     try {
-
+        const result = await serviceHandlers.shipDevice(req.query.id);
+        if (result.success) {
+            res.status(200);
+            res.send({ message: "Device shipped back", device: result.device })
+        }
+        else {
+            throw result.error
+        }
     }
     catch (e) {
-        
+        res.status(e.message === "Device is not ready to be shipped" ? 403 : 504);
+        res.send({ error: e });
     }
 });
 

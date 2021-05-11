@@ -18,6 +18,10 @@ Process.init( {
     estimated_cost: {
         type: DataTypes.BIGINT,
     },
+    device_id: {
+        type: DataTypes.BIGINT,
+        allowNull: false
+    },
     bookmark_id: {
         type: DataTypes.BIGINT,
     }

@@ -11,16 +11,12 @@ Payment.init( {
         autoIncrement: true,
         field: "id"
     },
-    created_at: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    updated_at: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
     payment_sum: {
         type: DataTypes.BIGINT,
+    },
+    process_id: {
+        type: DataTypes.BIGINT,
+        allowNull: false
     },
     client_id: {
         type: DataTypes.BIGINT,
