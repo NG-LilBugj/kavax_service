@@ -15,6 +15,16 @@ module.exports = {
         }
     },
 
+    deviceList: async (userId) => {
+        try {
+            const devices = await Device.findAll({ where: { owner_id: userId } });
+            return { success: true, devices }
+        }
+        catch (e) {
+            return { success: false, error: e }
+        }
+    },
+
     deliverDevice: async (data) => {
         try {
             const device = await Device.create({ model: data.model, owner_id: data.userId, image: data.image });
