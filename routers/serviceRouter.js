@@ -65,6 +65,7 @@ serviceRouter.get('/deviceImg', async (req, res) => {
 });
 serviceRouter.post('/deliver', upload, async (req, res) => {
     try {
+        console.log('path: ', `uploads/Upload ${timestamp}`)
         const bufferData = fs.readFileSync(`uploads/Upload ${timestamp}`)
         const data = req.body;
         const result = await serviceHandlers.deliverDevice({
