@@ -69,9 +69,9 @@ serviceRouter.post('/deliver', upload, async (req, res) => {
         const data = req.body;
         const result = await serviceHandlers.deliverDevice({
             model: data.model,
-            estimatedCost: data.estimatedCost,
+            estimatedCost: data.estimatedCost || 0,
             userId: jwt.decode(req.headers.authorization).userId,
-            image: bufferData
+            image: bufferData || ''
         });
         if (result.success) {
             res.status(200);
@@ -80,8 +80,8 @@ serviceRouter.post('/deliver', upload, async (req, res) => {
         else throw result.error;
     }
     catch (e) {
+        console.error(e)
         res.status(504);
-        res.send({ error: e });
     }
 });
 serviceRouter.delete('/ship', async (req, res) => {
